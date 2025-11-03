@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CPU Scheduling Visualizer — Advanced</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <h1>CPU Scheduling Visualizer</h1>
+      <p>FCFS · SJF · Round Robin · Priority · Multilevel Queue</p>
+    </div>
+    <div class="header-right">
+      <label class="theme-toggle">
+        <input id="themeToggle" type="checkbox" /> Light
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <section id="controls">
+      <div class="panel">
+        <h2>Processes</h2>
+        <form id="procForm" onsubmit="return false;">
+          <label>PID: <input id="pid" value="P1" /></label>
+          <label>Arrival: <input id="arrival" type="number" min="0" value="0" /></label>
+          <label>Burst: <input id="burst" type="number" min="1" value="5" /></label>
+          <label>Priority: <input id="priority" type="number" min="0" value="0" /></label>
+          <label>Queue: 
+            <select id="mlqQueue">
+              <option value="0">Foreground</option>
+              <option value="1">Background</option>
+            </select>
+          </label>
+          <div class="form-actions">
+            <button id="addProc" type="button">Add</button>
+            <button id="clearProcs" type="button">Clear</button>
+            <button id="seed" type="button">Load Demo</button>
+          </div>
+        </form>
+
+        <table id="procTable">
+          <thead><tr><th>PID</th><th>A</th><th>B</th><th>Prio</th><th>Q</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Algorithm & Options</h2>
+        <label>
+          <select id="algorithm">
+            <option value="FCFS">FCFS</option>
+            <option value="SJF">SJF</option>
+            <option value="RR">Round Robin</option>
+            <option value="PR">Priority</option>
+            <option value="MLQ">Multilevel Queue</option>
+          </select>
+        </label>
+
+        <div id="algoOptions">
+          <label id="quantumLabel">Quantum: <input id="quantum" type="number" min="1" value="2" /></label>
+          <label id="preemptLabel" style="display:none;"> <input id="preemptive" type="checkbox" /> Preemptive</label>
+          <label id="rrLabel" style="display:none;">Time-slice (ms): <input id="sliceMs" type="number" min="50" value="350" /></label>
+        </div>
+
+        <div class="action-row">
+          <button id="compute">Compute</button>
+          <button id="play">Play</button>
+          <button id="pause" disabled>Pause</button>
+          <button id="stepBack" disabled>◀</button>
+          <button id="stepForward" disabled>▶</button>
+        </div>
+
+        <label>Speed: <input id="speed" type="range" min="0.25" max="3" step="0.25" value="1" /></label>
+        <label>Timeline: <input id="timeline" type="range" min="0" max="0" value="0" step="1" /></label>
+
+        <div class="export-row">
+          <button id="exportPNG">Screenshot</button>
+          <button id="exportTrace">Export JSON</button>
+        </div>
+      </div>
+
+      <div class="panel stats">
+        <h2>Metrics</h2>
+        <div id="statsArea"><p>No schedule yet.</p></div>
+      </div>
+    </section>
+
+    <section id="canvasSection">
+      <div class="canvas-top">
+        <canvas id="gantt" width="1000" height="320"></canvas>
+      </div>
+
+      <div id="legend" class="panel"></div>
+
+      <div class="panel queue-area">
+        <div class="queue-col">
+          <h3>Ready Queue</h3>
+          <div id="readyQueue" class="queue"></div>
+        </div>
+        <div class="queue-col">
+          <h3>CPU</h3>
+          <div id="cpuSlot" class="cpu-slot">—</div>
+        </div>
+        <div class="queue-col">
+          <h3>Completed</h3>
+          <div id="completedList" class="queue"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>Standalone client-side — works with Live Server / local web server</small>
+  </footer>
+
+  <script type="module" src="./js/main.js"></script>
+
+
+</body>
+</html>
