@@ -2,7 +2,7 @@
 
 **Course:** Operating Systems (BCSE303L)  
 **Project:** Interactive Animation & Simulation Tool  
-**Author:** (Your Name)  
+**Author:** Piyush Watts  
 **Semester:** Fall 2025–2026  
 
 ---
